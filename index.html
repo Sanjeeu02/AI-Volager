@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voyager | AI-Powered Travel Excellence</title>
+    <meta name="description" content="Discover the future of travel planning with AI Voyager. Intelligent itineraries, budget-optimized bookings, and automated travel concierge.">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="AI Voyager | AI-Powered Travel Excellence">
+    <meta property="og:description" content="Plan your perfect trip with AI Voyager. Intelligent, simple, and autonomous travel concierge.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/bg.png">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="index.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/826/826070.png">
+</head>
+<body>
+    <div class="bg-container">
+        <img src="assets/bg.png" alt="Travel Background" class="bg-image">
+        <div class="gradient-overlay"></div>
+    </div>
+
+    <main class="container">
+        <section class="hero">
+            <div class="badge">Next-Gen Travel AI</div>
+            <h1>The World is Yours <br> to Explore</h1>
+            <p class="subtitle">Experience AI-powered travel planning that creates custom itineraries, optimizes budgets, and brings your dream trips to life with a single prompt.</p>
+            
+            <div class="cta-group">
+                <a href="http://localhost:8501" target="_blank" class="btn-primary">Launch AI Voyager</a>
+                <a href="#features" class="btn-secondary">Explore Features</a>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="feature-card">
+                <div class="feature-icon">📍</div>
+                <h3>Smart Itineraries</h3>
+                <p>Get personalized, day-by-day plans tailored to your interests and pace. No more generic lists.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💸</div>
+                <h3>Budget Optimization</h3>
+                <p>Our AI analyzes multiple sources to find the best deals on transport and hotels within your limits.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎬</div>
+                <h3>Vlog Generation</h3>
+                <p>Instantly create professional scripts for your travel videos using our built-in vlog script engine.</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 AI Voyager. Powered by Groq & Llama 3.3. Built for the adventurous.</p>
+        </footer>
+    </main>
+
+    <script>
+        // Smooth scroll implementation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Interactive hover effects for the background image
+        const bg = document.querySelector('.bg-image');
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            bg.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+        });
+    </script>
+</body>
+</html>

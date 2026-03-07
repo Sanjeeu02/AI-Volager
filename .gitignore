@@ -1,0 +1,14 @@
+# Private environment variables
+.env
+# JSON Chat logs
+chat_history.json
+search_cache.json
+users.json
+# Python caches
+__pycache__/
+*.pyc
+# OS files
+.DS_Store
+Thumbs.db
+# Streamlit/Static items if not wanted
+.streamlit/
