@@ -71,7 +71,8 @@
                 budgets, and brings your dream trips to life.</p>
 
             <div class="cta-group">
-                <a id="launchBtn" href="http://localhost:8501" target="_blank" class="btn-primary">Launch AI Voyager</a>
+                <a id="launchBtn" href="http://192.168.1.10:8501" target="_blank" class="btn-primary">Launch AI
+                    Voyager</a>
                 <a href="#features" class="btn-secondary">Explore Features</a>
             </div>
 
@@ -107,14 +108,14 @@
 
     <script>
         // CONFIG: Update this when deploying to production (e.g., Streamlit Cloud)
-        const APP_URL = "http://localhost:8501";
+        const APP_URL = "http://192.168.1.10:8501";
 
         // Update link on load
         document.getElementById('launchBtn').href = APP_URL;
 
         // Mobile Logic
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        if (isMobile && APP_URL.includes("localhost")) {
+        if (isMobile && (APP_URL.includes("localhost") || APP_URL.includes("127.0.0.1"))) {
             document.getElementById('connectionTip').style.display = 'block';
             document.getElementById('ipNote').style.display = 'block';
         }
