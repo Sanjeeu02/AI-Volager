@@ -17,9 +17,30 @@ class LangGraphAgentWrapper:
         self._current_model = self.primary_model
         self.graph = self._create_graph(self._current_model)
 
+    def _normalize_date(self, user_input):
+        """Try to parse various date formats and return a clean string."""
+        if not user_input or not isinstance(user_input, str):
+            return user_input
+        
+        # Common formats to try
+        formats = [
+            "%d/%m/%Y", "%d-%m-%Y", "%d/%m/%y", "%d-%m-%y",
+            "%Y/%m/%d", "%Y-%m-%d", "%d %b %Y", "%d %B %Y",
+            "%m/%d/%Y", "%m-%d-%Y" # Support for US style just in case
+        ]
+        
+        for fmt in formats:
+            try:
+                dt = datetime.strptime(user_input.strip(), fmt)
+                return dt.strftime("%d %B %Y") # e.g., 12 March 2026
+            except ValueError:
+                continue
+        return user_input
+
     def _build_system_prompt(self):
         today = datetime.now().strftime("%A, %d %B %Y")   # e.g. Monday, 03 March 2026
-        date_context = f"\n\n📅 TODAY'S DATE (use this for all date validation): {today}\n"
+        date_context = f"\n\n📅 TODAY'S DATE: {today}\n"
+        date_context += "⚠️ DATE PARSING RULE: The user might provide dates in formats like DD/MM/YYYY or DD-MM-YYYY. Always interpret numbers like 12/03 as Day 12, Month 03 unless specified otherwise.\n"
         return date_context + MASTER_SYSTEM_PROMPT + "\n\n" + AGENT_REASONING_PROMPT
 
     def _create_graph(self, model_name):
@@ -49,10 +70,13 @@ class LangGraphAgentWrapper:
 
     def _stream_with_model(self, graph, inputs):
         user_input = inputs.get("input")
+        # Clean up any date-like strings in the user input
+        clean_input = self._normalize_date(user_input)
+        
         chat_history = inputs.get("chat_history", [])
         # Keep only the very last 2 messages (1 Human, 1 AI) to prevent token explosion on free tiers
         truncated_history = chat_history[-2:]
-        messages = truncated_history + [HumanMessage(content=user_input)]
+        messages = truncated_history + [HumanMessage(content=clean_input)]
 
         for chunk, metadata in graph.stream(
             {"messages": messages},
@@ -90,10 +114,13 @@ class LangGraphAgentWrapper:
     )
     def invoke(self, inputs):
         user_input = inputs.get("input")
+        # Clean up any date-like strings in the user input
+        clean_input = self._normalize_date(user_input)
+        
         chat_history = inputs.get("chat_history", [])
         # Keep only the very last 2 messages (1 Human, 1 AI) to prevent token explosion on free tiers
         truncated_history = chat_history[-2:]
-        messages = truncated_history + [HumanMessage(content=user_input)]
+        messages = truncated_history + [HumanMessage(content=clean_input)]
 
         try:
             result_state = self.graph.invoke(
