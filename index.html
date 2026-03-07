@@ -27,114 +27,106 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/826/826070.png">
-
-    <style>
-        /* Small layout adjustments for mobile */
-        @media (max-width: 768px) {
-            .mobile-only {
-                display: block !important;
-            }
-
-            .desktop-only {
-                display: none !important;
-            }
-        }
-    </style>
 </head>
 
 <body>
     <div class="bg-container">
-        <img src="assets/bg.png" alt="Travel Background" class="bg-image">
+        <img src="assets/bg.png" alt="Travel Background" class="bg-image" id="bgImg">
         <div class="gradient-overlay"></div>
     </div>
 
-    <!-- Mobile Connection Tip -->
-    <div id="connectionTip" class="feature-card"
-        style="display:none; position:fixed; top:1rem; left:1rem; right:1rem; z-index:1000; border-color:var(--accent); background:rgba(15,23,42,0.95);">
-        <h4 style="color:var(--accent); margin-bottom:0.5rem;">📱 Mobile Access Tip</h4>
-        <p style="font-size:0.875rem;">To access the AI engine on your phone, use your computer's local IP address
-            instead of "localhost".</p>
-        <div
-            style="margin-top:1rem; font-family:monospace; background:rgba(255,255,255,0.1); padding:0.5rem; border-radius:4px; font-size:0.8rem;">
-            e.g. http://10.35.69.252:8501
-        </div>
-        <button onclick="document.getElementById('connectionTip').style.display='none'"
-            style="margin-top:1rem; background:var(--glass); border:1px solid var(--accent); color:white; padding:0.4rem 1rem; border-radius:4px; cursor:pointer;">Got
-            it!</button>
-    </div>
+    <!-- Top Navigation Header -->
+    <header>
+        <div class="logo">� Voyager AI</div>
+        <div class="badge desktop-only" style="margin-bottom:0">v1.2 Stable</div>
+    </header>
 
     <main class="container">
-        <section class="hero">
+        <!-- Hero Content -->
+        <section class="hero" data-aos>
             <div class="badge">Next-Gen Travel AI</div>
             <h1>The World is Yours <br class="desktop-only"> to Explore</h1>
             <p class="subtitle">Experience AI-powered travel planning that creates custom itineraries, optimized
-                budgets, and brings your dream trips to life.</p>
+                budgets, and brings your dream trips to life with a single prompt.</p>
 
             <div class="cta-group">
-                <a id="launchBtn" href="http://10.35.69.252:8501" target="_blank" class="btn-primary">Launch AI
-                    Voyager</a>
-                <a href="#features" class="btn-secondary">Explore Features</a>
+                <a id="launchBtn" href="http://10.35.69.252:8501" target="_blank" class="btn btn-primary">
+                    Launch AI Voyager ✈️
+                </a>
+                <a href="#features" class="btn btn-secondary">
+                    Explore Features
+                </a>
             </div>
-
-            <p id="ipNote" style="margin-top:1.5rem; font-size:0.875rem; color:#94A3B8; display:none;">
-                Running on mobile? Refer to the tooltip above for connection details.
-            </p>
         </section>
 
+        <!-- Feature Grid -->
         <section id="features" class="features">
-            <div class="feature-card">
-                <div class="feature-icon">📍</div>
+            <div class="card" data-aos>
+                <div class="icon-box">📍</div>
                 <h3>Smart Itineraries</h3>
-                <p>Personalized, day-by-day plans tailored to your pace. Intelligent, simple, and autonomous.</p>
+                <p>Personalized, day-by-day plans tailored to your interessi and pace. Get accurate local tips and route
+                    optimization instantly.</p>
             </div>
 
-            <div class="feature-card">
-                <div class="feature-icon">💸</div>
-                <h3>Budget Optimization</h3>
-                <p>Advanced algorithms find the best deals within your limits across hotels and transport.</p>
+            <div class="card" data-aos>
+                <div class="icon-box">💸</div>
+                <h3>Budget Engine</h3>
+                <p>Advanced AI that analyzes multiple sources to find the best value for transport, accommodation, and
+                    attractions.</p>
             </div>
 
-            <div class="feature-card">
-                <div class="feature-icon">🎬</div>
-                <h3>Vlog Scripts</h3>
-                <p>Instantly generate professional scripts for your travel videos using our built-in video engine.</p>
+            <div class="card" data-aos>
+                <div class="icon-box">�️</div>
+                <h3>Vlog Generator</h3>
+                <p>Instantly generate professional, engaging travel stories and YouTube scripts with our built-in video
+                    engine.</p>
             </div>
         </section>
 
-        <footer>
-            <p>&copy; 2026 AI Voyager. Built on open source technologies.</p>
+        <!-- Footer -->
+        <footer style="margin-top:8rem; color:var(--text-muted); font-size:0.875rem; text-align:center;">
+            <p>&copy; 2026 AI Voyager. Powered by DeepMind & Groq Technologies.</p>
         </footer>
     </main>
 
+    <!-- Scroll Script for animations -->
     <script>
-        // CONFIG: Update this when deploying to production (e.g., Streamlit Cloud)
+        // CONFIG: The actual machine IP address for local network access
         const APP_URL = "http://10.35.69.252:8501";
-
-        // Update link on load
         document.getElementById('launchBtn').href = APP_URL;
 
-        // Mobile Logic
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        if (isMobile && (APP_URL.includes("localhost") || APP_URL.includes("127.0.0.1"))) {
-            document.getElementById('connectionTip').style.display = 'block';
-            document.getElementById('ipNote').style.display = 'block';
-        }
+        // AOS Clone (Simple reveal on scroll)
+        const observerOptions = { threshold: 0.15 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
 
-        // Smooth scroll
+        document.querySelectorAll('[data-aos]').forEach(el => observer.observe(el));
+
+        // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
             });
         });
 
-        // Parallax effect on mouse move (Desktop)
-        if (!isMobile) {
-            const bg = document.querySelector('.bg-image');
+        // Interactive background parallax (Desktop)
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const bgImg = document.getElementById('bgImg');
+
+        if (!isMobile && bgImg) {
             document.addEventListener('mousemove', (e) => {
                 const x = (e.clientX / window.innerWidth - 0.5) * 15;
                 const y = (e.clientY / window.innerHeight - 0.5) * 15;
-                bg.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+                bgImg.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
             });
         }
     </script>
