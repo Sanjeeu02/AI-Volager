@@ -51,8 +51,13 @@ body {
 }
 
 @keyframes zoomOut {
-    0% { transform: scale(1.1); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .gradient-overlay {
@@ -115,6 +120,7 @@ h1 {
     margin-bottom: 1.5rem;
     background: linear-gradient(to bottom right, #FFFFFF 30%, #94A3B8 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -243,13 +249,71 @@ footer {
     font-size: 0.875rem;
 }
 
-/* Responsive */
+/* ===== RESPONSIVE & MOBILE OPTIMIZATIONS ===== */
 @media (max-width: 768px) {
+    .bg-container {
+        position: absolute;
+        /* Better for mobile scroll performance */
+    }
+
+    .bg-image {
+        animation: none;
+        /* Reduce CPU usage on small screens */
+        transform: scale(1);
+    }
+
+    .container {
+        padding: 0 1.5rem;
+        justify-content: flex-start;
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+    }
+
+    h1 {
+        font-size: clamp(2.5rem, 12vw, 4rem);
+        margin-bottom: 1.25rem;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 2.5rem;
+    }
+
     .cta-group {
         flex-direction: column;
         width: 100%;
+        gap: 1.25rem;
     }
-    .btn-primary, .btn-secondary {
+
+    .btn-primary,
+    .btn-secondary {
         width: 100%;
+        padding: 1.25rem 2rem;
+        font-size: 1.1rem;
+        text-align: center;
+    }
+
+    .features {
+        margin-top: 5rem;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .feature-card {
+        padding: 2rem;
+    }
+
+    footer {
+        position: relative;
+        bottom: 0;
+        margin-top: 5rem;
+        padding-bottom: 3rem;
+    }
+}
+
+/* Fix for iOS Safari height issues */
+@supports (-webkit-touch-callout: none) {
+    .bg-container {
+        height: -webkit-fill-available;
     }
 }

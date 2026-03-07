@@ -1,84 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AI Voyager | AI-Powered Travel Excellence</title>
-    <meta name="description" content="Discover the future of travel planning with AI Voyager. Intelligent itineraries, budget-optimized bookings, and automated travel concierge.">
-    
+    <meta name="description"
+        content="Discover the future of travel planning with AI Voyager. Intelligent itineraries, budget-optimized bookings, and automated travel concierge.">
+    <meta name="theme-color" content="#4F46E5">
+
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/826/826070.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <!-- Open Graph / Social Media -->
     <meta property="og:title" content="AI Voyager | AI-Powered Travel Excellence">
-    <meta property="og:description" content="Plan your perfect trip with AI Voyager. Intelligent, simple, and autonomous travel concierge.">
+    <meta property="og:description"
+        content="Plan your perfect trip with AI Voyager. Intelligent, simple, and autonomous travel concierge.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="assets/bg.png">
 
     <!-- Styles -->
     <link rel="stylesheet" href="index.css">
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/826/826070.png">
+
+    <style>
+        /* Small layout adjustments for mobile */
+        @media (max-width: 768px) {
+            .mobile-only {
+                display: block !important;
+            }
+
+            .desktop-only {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
+
 <body>
     <div class="bg-container">
         <img src="assets/bg.png" alt="Travel Background" class="bg-image">
         <div class="gradient-overlay"></div>
     </div>
 
+    <!-- Mobile Connection Tip -->
+    <div id="connectionTip" class="feature-card"
+        style="display:none; position:fixed; top:1rem; left:1rem; right:1rem; z-index:1000; border-color:var(--accent); background:rgba(15,23,42,0.95);">
+        <h4 style="color:var(--accent); margin-bottom:0.5rem;">📱 Mobile Access Tip</h4>
+        <p style="font-size:0.875rem;">To access the AI engine on your phone, use your computer's local IP address
+            instead of "localhost".</p>
+        <div
+            style="margin-top:1rem; font-family:monospace; background:rgba(255,255,255,0.1); padding:0.5rem; border-radius:4px; font-size:0.8rem;">
+            e.g. http://192.168.1.10:8501
+        </div>
+        <button onclick="document.getElementById('connectionTip').style.display='none'"
+            style="margin-top:1rem; background:var(--glass); border:1px solid var(--accent); color:white; padding:0.4rem 1rem; border-radius:4px; cursor:pointer;">Got
+            it!</button>
+    </div>
+
     <main class="container">
         <section class="hero">
             <div class="badge">Next-Gen Travel AI</div>
-            <h1>The World is Yours <br> to Explore</h1>
-            <p class="subtitle">Experience AI-powered travel planning that creates custom itineraries, optimizes budgets, and brings your dream trips to life with a single prompt.</p>
-            
+            <h1>The World is Yours <br class="desktop-only"> to Explore</h1>
+            <p class="subtitle">Experience AI-powered travel planning that creates custom itineraries, optimized
+                budgets, and brings your dream trips to life.</p>
+
             <div class="cta-group">
-                <a href="http://localhost:8501" target="_blank" class="btn-primary">Launch AI Voyager</a>
+                <a id="launchBtn" href="http://localhost:8501" target="_blank" class="btn-primary">Launch AI Voyager</a>
                 <a href="#features" class="btn-secondary">Explore Features</a>
             </div>
+
+            <p id="ipNote" style="margin-top:1.5rem; font-size:0.875rem; color:#94A3B8; display:none;">
+                Running on mobile? Refer to the tooltip above for connection details.
+            </p>
         </section>
 
         <section id="features" class="features">
             <div class="feature-card">
                 <div class="feature-icon">📍</div>
                 <h3>Smart Itineraries</h3>
-                <p>Get personalized, day-by-day plans tailored to your interests and pace. No more generic lists.</p>
+                <p>Personalized, day-by-day plans tailored to your pace. Intelligent, simple, and autonomous.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">💸</div>
                 <h3>Budget Optimization</h3>
-                <p>Our AI analyzes multiple sources to find the best deals on transport and hotels within your limits.</p>
+                <p>Advanced algorithms find the best deals within your limits across hotels and transport.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">🎬</div>
-                <h3>Vlog Generation</h3>
-                <p>Instantly create professional scripts for your travel videos using our built-in vlog script engine.</p>
+                <h3>Vlog Scripts</h3>
+                <p>Instantly generate professional scripts for your travel videos using our built-in video engine.</p>
             </div>
         </section>
 
         <footer>
-            <p>&copy; 2026 AI Voyager. Powered by Groq & Llama 3.3. Built for the adventurous.</p>
+            <p>&copy; 2026 AI Voyager. Built on open source technologies.</p>
         </footer>
     </main>
 
     <script>
-        // Smooth scroll implementation
+        // CONFIG: Update this when deploying to production (e.g., Streamlit Cloud)
+        const APP_URL = "http://localhost:8501";
+
+        // Update link on load
+        document.getElementById('launchBtn').href = APP_URL;
+
+        // Mobile Logic
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile && APP_URL.includes("localhost")) {
+            document.getElementById('connectionTip').style.display = 'block';
+            document.getElementById('ipNote').style.display = 'block';
+        }
+
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
             });
         });
 
-        // Interactive hover effects for the background image
-        const bg = document.querySelector('.bg-image');
-        document.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 20;
-            const y = (e.clientY / window.innerHeight - 0.5) * 20;
-            bg.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
-        });
+        // Parallax effect on mouse move (Desktop)
+        if (!isMobile) {
+            const bg = document.querySelector('.bg-image');
+            document.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 15;
+                const y = (e.clientY / window.innerHeight - 0.5) * 15;
+                bg.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+            });
+        }
     </script>
 </body>
+
 </html>

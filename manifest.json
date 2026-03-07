@@ -1,0 +1,15 @@
+{
+    "name": "AI Voyager",
+    "short_name": "Voyager",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#0F172A",
+    "theme_color": "#4F46E5",
+    "icons": [
+        {
+            "src": "https://cdn-icons-png.flaticon.com/512/826/826070.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
