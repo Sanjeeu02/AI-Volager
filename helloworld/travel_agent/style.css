@@ -277,6 +277,60 @@ tbody td a:hover {
     background: var(--text-secondary);
 }
 
+/* ===== TEXT & LABELS ===== */
+label[data-testid="stWidgetLabel"] {
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+}
+
+.stCaption {
+    color: var(--text-secondary) !important;
+    font-size: 0.85rem !important;
+}
+
+/* Ensure tables are visible on mobile */
+@media (max-width: 768px) {
+    table {
+        display: block !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+    }
+
+    thead th {
+        background: var(--primary-color) !important;
+        color: #FFFFFF !important;
+        min-width: 120px;
+    }
+
+    tbody td {
+        color: var(--text-primary) !important;
+        background: #FFFFFF !important;
+    }
+}
+
+/* Fix for Vlog Script specific tables */
+.stMarkdown table {
+    border-collapse: collapse !important;
+    margin: 1.5rem 0 !important;
+}
+
+.stMarkdown thead th {
+    background-color: var(--primary-color) !important;
+    color: #FFFFFF !important;
+}
+
+/* RESPONSIVE HERO */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 1.8rem !important;
+    }
+
+    .hero-section {
+        padding: 1.5rem 1rem !important;
+    }
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .hero-title {
